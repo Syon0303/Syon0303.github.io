@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "첫 글"
-date:   2022-01-12 01:00:36 +0900
+date:   2022-01-12 02:00:36 +0900
 categories: etc
 ---
 Notion으로 TIL을 작성하던 중, 잔디를 심고 싶은 마음이 문득 들어 Github에서 블로그를 작성하려고 한다.
