@@ -1,0 +1,56 @@
+---
+layout: post
+title:  "삽질의 연속"
+date:   2022-01-12 16:13:36 +0900
+categories: etc
+---
+
+theme를 적용하는데 삽질을 너~무 많이 했다.
+
+애초에 뭐가 잘못되었는지도 몰라서 이미 깃허브 블로그에서 TIL을 진행하고있는 동생에게 "로컬에서는 확인이 되는데, 깃허브에 배포가 안된다"라고 질문했더니
+
+"어 저거 Failure 되있는데요 형?" 
+
+<p align="center">
+    <img src="/assets/images/210112_github-pages_Environments.png" width="25%" height="25%" title="이걸 못보네"/>
+</p>
+
+<p align="center">
+    <i>해결한 후에 찍은 스크린샷. 원래는 Active가 아닌 Failure 였다..</i>
+</p>
+
+...
+
+이걸 못봤었네...
+
+아무튼 확인 후, theme를 배포해주는 [samarsault의 github][plainwhite_jekyll]의 readme.md를 수차례 읽어보아도 내가 진행하지 않은 부분이 없었다.
+
+그렇게 진행하던 도중.. 한 사이트에서 gemfile을 수정하여 문제를 해결한 것을 확인하였다.
+
+<pre>
+<code>
+# frozen_string_literal: true
+
+source "https://rubygems.org"
+gem "plainwhite"
+gem "jekyll"
+gem "jekyll-seo-tag"
+
+gem "webrick", "~> 1.7"
+</code>
+</pre>
+
+
+결국 두 줄을 추가하여 어제 밤부터 삽질했던 것을 해결할 수 있었다 ! 오예 !
+
+
+<p align="center">
+    <img src="/assets/images/210112_fucking.png" width="25%" height="25%" title="삽질의 증거"/>
+</p>
+
+<p align="center">
+    <i>삽질의 증거</i>
+</p>
+
+
+[plainwhite_jekyll]: https://github.com/samarsault/plainwhite-jekyll
