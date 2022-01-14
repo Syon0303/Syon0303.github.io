@@ -12,7 +12,7 @@ theme를 적용하는데 삽질을 너~무 많이 했다.
 "어 저거 Failure 되있는데요 형?" 
 
 <p align="center">
-    <img src="/assets/images/210112_github-pages_Environments.png" width="25%" height="25%" title="이걸 못보네"/>
+    <img src="/assets/images/220112_github-pages_Environments.png" width="25%" height="25%" title="이걸 못보네"/>
 </p>
 
 <p align="center">
@@ -45,7 +45,7 @@ gem "webrick", "~> 1.7"
 
 
 <p align="center">
-    <img src="/assets/images/210112_fucking.png" width="25%" height="25%" title="삽질의 증거"/>
+    <img src="/assets/images/220112_fucking.png" width="25%" height="25%" title="삽질의 증거"/>
 </p>
 
 <p align="center">

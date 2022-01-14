@@ -10,7 +10,7 @@ categories: etc
 
 <br>
 <p align="center">
-    <img src="/assets/images/210113_poorMyGithub.png" width="75%" height="75%" title="휑한 나의 깃허브"/>
+    <img src="/assets/images/220113_poorMyGithub.png" width="75%" height="75%" title="휑한 나의 깃허브"/>
 </p>
 
 <p align="center">
@@ -36,7 +36,7 @@ categories: etc
 
 <br>
 <p align="center">
-    <img src="/assets/images/210113_myCapsuleRender.png" width="25%" height="25%" title="최종본"/>
+    <img src="/assets/images/220113_myCapsuleRender.png" width="25%" height="25%" title="최종본"/>
 </p>
 
 <p align="center">
