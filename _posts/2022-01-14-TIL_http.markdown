@@ -1,0 +1,166 @@
+---
+layout: post
+title:  "웹의 3요소"
+date:   2022-01-14 19:17:36 +0900
+categories: html/css
+---
+금일을 포함하여 이번 주말에는 웹의 3요소인 HTML과 CSS, JavaScript를 정리해보고자 한다.
+
+<h3>구조와 표현의 분리</h3>
+1. 웹 표준을 준수함으로써 웹 문서 파일의 용량을 줄일 수 있다.
+2. 트래픽의 감소 효과를 얻을 수 있다.
+
+<br>
+<p align="center">
+    <img src="/assets/images/220114_threeElementsOfWeb.png" width="50%" height="50%" title="웹의 3요소"/>
+</p>
+
+<p align="center">
+    <i>웹의 3요소</i>
+</p>
+<br>
+
+__HTML__ (Hyper Text Markup Language)
+* 웹 문서를 만들기 위해 사용하는 웹 언어의 한 종류
+* 웹 페이지에서 제목, 이미지, 동영상, 문단, 표 등을 정의하고 그 구조와 의미를 부여하는 정적 언어.
+* 웹의 __구조__를 담당한다.
+
+
+__CSS__ (Cascading Style Sheets)
+* 마크업 언어(HTML, XML 등)가 실제 표시되는 방법(색상, 레이아웃, 크기, 폰트 등)을 지정하여 콘텐츠 구조를 꾸며주는 정적 언어.
+* 웹의 __시각__적인 표현을 담당함.
+
+
+__JS__ (JavaScript)
+* HTML 문서의 정적이고 단조로운 한계를 극복하기 위해 Netscape사가 만든 liveScript가 이름을 달리한 것으로 브라우저 자체에서 내장된 해석기능을 이용한 클라이언트 기반의 스크립트 언어.
+* 콘텐츠를 바꾸고 움직이는 등 페이지를 동적으로 꾸며주는 역할을 하는 프로그래밍 언어.
+* 웹의 __동적 처리__를 담당한다.
+
+
+쉽게 정리하자면, HTML로 웹 페이지의 뼈대를 만들고, CSShㄹ 웹 페이지의 옷을 입히고, JS로 기능을 추가한다고 할 수 있다.
+이는 세 가지로 귀결되는데, __갖다놓고, 꾸미고, 시킨다__ 이렇게 3가지만 기억하자.
+
+
+예제 코드를 통해, 아래 사진과 같은 얄팍한 계산기를 만들어보자. [(출처)][얄팍한 계산기]
+
+<br>
+<p align="center">
+    <img src="/assets/images/220114_trivialCalculator.png" width="60%" height="60%" title="얄팍한 계산기"/>
+</p>
+
+<p align="center">
+    <i>얄팍한 계산기</i>
+</p>
+
+<br/>
+<h2>예제 코드</h2>
+index.html
+```html
+<html lang="ko">
+  <head>
+    <link rel="stylesheet" href="style.css"/>
+    <script defer tyle="text/javascript" src="script.js"></script>
+  </head>
+  <body>
+    <div id="calculator">
+      <span>얄팍한 계산기</span><br/>
+      <input id="formula-input" 
+        type="text" 
+        placeholder="수식을 입력하세요."/>
+        <div id="calc-history"></div>
+    </div>
+  </body>
+</html>
+```
+
+<br/>
+style.css
+```css
+#calculator {
+  background-color: #ffbb24;
+  border-radius: 12px;
+  width: 240px;
+  margin: 24px;
+  padding: 24px;
+  text-align: center;
+}
+
+#calculator span {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: white;
+  text-shadow: 0 0 2px rgba(0, 0, 0, 0.33);
+}
+
+#calculator #formula-input {
+  width: 100%;
+  margin-top: 8px;
+  line-height: 36px;
+  font-size: 1.1em;
+  letter-spacing: 3px;
+  border: 0;;
+  text-align: center;
+}
+
+#calculator #formula-input:focus {
+  outline-width: 0;
+}
+
+#calculator #calc-history div {
+  height: 36px;
+  line-height: 36px;
+  margin-top: 1px;
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+#calculator #calc-history div.invalid {
+  color: tomato;
+  font-weight: bold;
+}
+```
+
+<br/>
+script.js
+```js
+var formulaInput = document.getElementById("formula-input");
+var calcHistDiv = document.getElementById("calc-history");
+
+formulaInput.addEventListener("keyup", function(e) {
+  if (e.code === "Enter")
+    calculate();
+});
+
+function calculate () {
+
+  // 입력칸의 문자열이 사칙연산 형식이 맞는지 확인
+  var fm = formulaInput.value;
+  var formulaRegex = /^\d+(.\d+)?[+\-*/]{1}\d+(.\d+)?$/;
+  var formulaValid = formulaRegex.test(fm);
+
+  var resultText = "노";
+  if (formulaValid) {
+    // 형식에 맞을 시 식을 계산하고 결과 문자열을 설정
+    var answer;
+    eval('answer=' + fm);
+    resultText = fm + " = ";
+    resultText
+      += (answer % 1 > 0 ? answer.toFixed(2) : answer.toString());
+  }
+
+  // calc-history 상자에 넣을 또 다른 상자를 생성하고 내용을 설정한 뒤 삽입
+  var resultDiv = document.createElement("DIV");
+  resultDiv.appendChild(document.createTextNode(resultText));
+  if (!formulaValid)
+    resultDiv.classList.add("invalid");
+  calcHistDiv.insertBefore(resultDiv, calcHistDiv.firstChild);
+
+  // 입력칸은 빈칸으로
+  formulaInput.value = "";
+}
+```
+
+
+[설명 출처][설명]
+
+[설명]: https://junghn.tistory.com/entry/htmlcss-HTMLCSSJavascript-%EC%9D%98-%EC%A0%95%EC%9D%98%EC%99%80-%EC%B0%A8%EC%9D%B4%EC%A0%90
+[얄팍한 계산기]: https://www.yalco.kr/06_html_css_js/
