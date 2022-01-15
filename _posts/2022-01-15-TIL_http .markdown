@@ -1,0 +1,89 @@
+---
+layout: post
+title:  "HTML"
+date:   2022-01-15 19:17:36 +0900
+categories: html/css
+---
+오늘은 HTML에 대해 공부해보고자 한다.
+{: .text-center }
+
+<h1>HTML이란 무엇인가</h1>
+1. HTML은 Hyper Text Markup Language의 약어로, HyperText(웹 페이지에서 다른 페이지로 이동할 수 있도록 하는 것)기능을 가진 문서를 만드는 언어이다.
+2. HTML은 구조를 설계할 때 사용하는 언어로, hyper link 시스템을 가지고 있으며, 흔히 말하는 웹 페이지를 위한 마크업 언어라고 할 수 있다.
+
+<h2>그렇다면 웹 페이지는 무엇인가</h2>
+1. 웹 페이지는 월드 와이드 웹 상에 있는 개개의 문서를 가리킨다. 
+2. .gif, .jpg, .pdf와 같은 확장자 포맷이 있듯, HTML은 .htm, .html 확장자 포맷을 가지고 있다.
+3. html 문서는 단순히 텍스트 파일에 불과하고, 웹 브라우저가 해석을 해서 구조를 통해 화면에 렌더링 해주게 되고 사용자는 View라고 하는 스크린을 통해 접하게 되는 것이다.
+
+
+간단히, 웹이라고 부르는 경우가 많은데, 지금 내가 글을 적어 업로드한 이 블로그도 엄연한 웹 페이지이며, 현재 이 문서를 읽고 있다면 '웹 페이지를 보고있다'고 할 수 있다.
+그리고 이 웹이라는 용어는 인터넷과 동의어로 쓰이는 경우가 많으나 엄격히 말해 서로 다른 개념이다.
+인터넷이란 이름은 '네트워크의 네트워크'를 구현하여 모든 컴퓨터를 하나의 통신망 안에 연결하고자 하는 의도에서 이를 Internet이라고 처음 명명한 것에 어원을 두고 있다.
+또한, 앞으로 이 마크업 언어를 숙지하는데 있어 항상 시멘틱 마크업을 목표로 나아가야 할 것이다.
+시멘틱 마크업(Semantic Markup)은 웹 사이트(페이지)의 컨텐츠를 설명하는데 사용되는 마크업 언어이고, HTML은 콘텐츠의 의미를 설명하는데 유일한 목적을 가진다.
+CSS가 Visual Design이라면, HTML은 Structure Design이라고 할 수 있다.
+
+
+<h2>Semantic Markup</h2>
+__Semantic Markup__ 은 종종 POSH(Plain Old Semantic HTML)라고도 불리는데, 말 그대로 평범하고 오래된 의미론적인 HTML이라는 뜻이다.
+HTML은 웹 사이트 콘텐츠를 설명하는데 사용되는 마크업 언어이므로, 콘텐츠의 의미를 설명하는데 유일한 목적을 두고 있다.
+앞으로 공부할 CSS가 Visual Design이라면, HTML은 Structure Design이라고 할 수 있다.
+
+<br>
+<h2>HTML 문서 작성을 위한 기본 문법</h2>
+HTML 문서인 웹 페이지는 head 영역과 body 영역으로 구성되며, 문서의 title은 웹 페이지의 제목으로, 브라우저 탭에 표시된다.
+
+
+<h3>HTML 용어</h3>
+* 엘리먼트(element) - 요소 (콘텐츠를 감싸는 tag)
+* open tag - 여는 태그
+* close tag - 닫는 태그
+
+<br>
+<p align="center">
+    <img src="https://t1.daumcdn.net/cfile/tistory/99C713425C1B1CC714" width="50%" height="50%" title="HTML 용어"/>
+</p>
+
+<p align="center">
+    <i>HTML 용어 예시</i>
+</p>
+<br>
+* 여는 태그와 닫는 태그가 있는 이유는 콘텐츠를 감싸기 위함이거나 요소가 다른 요소를 감싸기 위해 여는 태그와 닫는 태그를 사용한다.
+* 닫는 태그가 없는 HTML요소는, 콘텐츠를 감싸지 않아 비어있다는 의미이다.
+* attribute - 속성
+* value - 값
+
+<br>
+<h2>HTML 문서 작성을 위한 DTD</h2>
+HTML을 작성하려면 문서타입이라는 것이 반드시 필요하다. 이를 DTD(DOCTYPE or Document type Definition)라고 하며, 이 DTD는 HTML 문서의 반드시 __최상위__ 에 위치해야 한다.
+이러한 문서형 정의로 HTML5, HTML4, XHTML 세 가지 문서 유형이 존재하며, 기술한 유형에 따라 마크업 문서의 요소와 속성(attribute) 등을 처리하는 기준이 되고 이것은 또한 유효성 검사에 이용된다.
+만약 문서 타입(DTD) 정의를 생략하는 경우 웹 브라우저가 표준모드가 아니라 비표준모드(Quirks mode)로 렌더링되어 크로스 브라우징에 어려움을 겪을 수 있다.
+
+
+DOCTYPE의 버전별선언(HTML5, HTML4, XHTML)에 따라서, HTML은 지원하는 태그가 조금씩 다르다.
+또한, DOCTYPE 태그가 아니라 선언문으로서의 역할이기 때문에 HTML 문서 최상위에 위치하는 것이다.
+DOCTYPE 종료하는 태그가 없는 것이 특징이며, <!DOCTYPE>은 HTML 문서의 구성 요소는 아니다.
+
+
+아래 문서가 기본 HTML5 문서타입이다.
+```html
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Script-Type" content="text/javascript">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title>HTML 4.01 문서타입</title>
+  <link rel="stylesheet" type="text/css" href="css/service_name.css">
+  </head>
+  <body>
+
+  </body>
+  </html>
+
+```
+
+[설명 출처][설명]
+
+[설명]: https://webclub.tistory.com/608
