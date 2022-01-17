@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Java-array"
-date:   2022-01-17 19:17:36 +0900
+date:   2022-01-16 19:17:36 +0900
 categories: java
 ---
 이번 포스팅에선 JAVA에서의 배열에 대해 알아보고자 한다.
