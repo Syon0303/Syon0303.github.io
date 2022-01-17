@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Java-array"
+title:  "배열"
 date:   2022-01-16 19:17:36 +0900
 categories: java
 ---
