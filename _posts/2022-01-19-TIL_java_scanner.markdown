@@ -1,139 +1,111 @@
 ---
 layout: post
-title:  "다차원 배열"
-date:   2022-01-17 19:17:36 +0900
+title:  "Scanner"
+date:   2022-01-19 19:17:36 +0900
 categories: java
 ---
-이번 포스팅에선 JAVA에서의 다차원 배열에 대해 알아보고자 한다.
+이번 포스팅에선 JAVA에서의 Scanner에 대해 알아보고자 한다.
 
-<h1>다차원 배열이란 무엇인가</h1>
-* 다차원 배열이란, 2차원 이상의 배열을 의미하며, 배열 요소로 또 다른 배열을 가지는 배열을 의미한다.
-* 2차원 배열은 배열 요소로 1차원 배열을 가지는 배열이며, 3차원 배열은 배열 요소로 2차원 배열을 가지는 ...
-
-
-<br>
-<h2>2차원 배열</h2>
-* 2차원 배열이란 배열의 요소로 1차원 배열을 가지는 배열이다. 기본적인 배열(1차원)보다야 사용 빈도가 적긴 하지만, 많이 사용되니 알아두면 좋을 것이다.
-
-2차원 배열은 아래와 같이 선언된다.
-
-<br>
-<p align="center">
-    <img src="https://mblogthumb-phinf.pstatic.net/MjAxNzAzMDVfMjQ3/MDAxNDg4NzIyMTkzMTQ4.9gK3m7XnaMiLivGafCCCZSjuJQMFe3z81fSgEnNSy3Mg.b7GeOEEVrUY7atju5i7vI-FVcdezcZ6pyW6zZRlrOBkg.PNG.heartflow89/image.png?type=w800" width="50%" height="50%" title="2차원 배열 선언 예시"/>
-</p>
-
+<h1>Scanner Class</h1>
+* 읽은 바이트를 문자, 정수, 실수, boolean, 문자열 등 __다양한 타입으로 변환하여 return하는 클래스이다.__ (단, char는 없음)
+* java.util.scanner
+* Scanner는 입력되는 키 값을 공백으로 구분되는 토큰 단위로 읽는다.
+* 공백 문자로는 '\t', '\f', '\r', '', '\n' 등이 있다.
 
 
 <br>
-2차원 배열도 기본 배열과 마찬가지로 2가지 형식으로 배열을 정의할 수 있다. 첫 번째 방식은 배열의 값을 미리 알고 있을 때 사용하게 된다. 2차원 이상의 배열들은 수학의 행렬과 비슷한 자료구조를 갖는다. 우선 간단한 예제를 통해 알아보자.
+<h2>Scanner 기본 사용 방법</h2>
 
 ```java
-public class ArrayEx05{
+import java.util.Scanner;
+
+public class ScannerEx01{
     public static void main(String[] args){
-        int[][] num = { {4, 3, 4},
-                        {3, 7, 6},
-                        {5, 8, 7},
-                        {9, 9, 10} };
+        Scanner sc = new Scanner(System.in); // Scanner 객체인 sc 생성
+    }
+}
+
+```
+* System.in을 사용하여 키보드로 입력 값을 읽고 원하는 타입으로 변환하여 리턴한다.
+
+
+<br>
+<h2>System.in이란?</h2>
+* 키보드와 연결된 __자바의 표준 입력 스트림__ 이다.
+* 입력되는 키를 byte로 리턴하는 저수준 스트림이다.
+* System.in을 직접 사용하면 byte를 문자나 숫자로 변환하는 많은 어려움이 있다.
+
+<br>
+<h2>Scanner를 사용한 간단한 예시</h2>
+
+```java
+import java.util.Scanner;
+
+public class ScannerEx02{
+    public static void main(String[] args){
+        Scanner sc = new Scanner(System.in);
+
+        String name = sc.next(); // "Syon"
+        String city = sc.next(); // "Gumi"
+        int age = scan.nextInt(); // 28..?..
+    }
+}
+
+```
+
+<br>
+<h2>Scanner의 주요 Method</h2>
+<table><thead><tr><th>메소드</th><th>설명</th></tr></thead><tbody><tr><td>String next()</td><td>다음 토큰을 문자열로 리턴</td></tr><tr><td>byte nextByte()</td><td>다음 토큰을 byte 타입으로 리턴</td></tr><tr><td>short nextShort()</td><td>다음 토큰을 short 타입으로 리턴</td></tr><tr><td>int nextInt()</td><td>다음 토큰을 int 타입으로 리턴</td></tr><tr><td>long nextLong()</td><td>다음 토큰을 Long 타입으로 리턴</td></tr><tr><td>float nextFloat()</td><td>다음 토큰을 float 타입으로 리턴</td></tr><tr><td>double nextDouble()</td><td>다음 토큰을 double 타입으로 리턴</td></tr><tr><td>String nextLine()</td><td>'\n'을 포함하는 한 라인을 읽고, '\n'을 버린 나머지만 리턴</td></tr><tr><td>void close()</td><td>Scanner의 사용 종료</td></tr><tr><td>boolean hasNext()</td><td>현재 입력된 토큰이 있으면 true, 아니면 새로운 입력이 들어올 때까지 기다린 후 true 리턴. ctrl+z가 입력되면 false 리턴</td></tr></tbody></table>
+
+<br>
+<h3>Example</h3>
+
+```java
+import java.util.Scanner;
+
+public class ScannerEx03{
+    public static void main(String[] args){
+        Scanner sc = new Scanner(System.in);
+
+        String name;
+        int age;
         
-        for(int i = 0; i < 4; i++){
-            for(int j = 0; j < 3; j++){
-                System.out.println(i+"행 "+j+"열의 값 : "+num[i][j]);
-            }
-        }
+        System.out.println("Enter your age");
+        age = sc.nextInt();
+        System.out.println("Enter your name");
+        name = sc.nextLine();
+        
+        System.out.printf("Your age is %d.%n", age);
+        System.out.printf("Your name is %s.%n", name);
+
+        sc.close();
+
     }
 }
 
 ```
-<br>
-4행 3열짜리 배열을 정의하였고, 배열에 저장된 값 출력을 위해 이중 반복문을 작성하였다.
-
-
-2차원 배열을 정의하는 두 번째 방법은 아래와 같다.
-
-<br>
-<p align="center">
-    <img src="https://mblogthumb-phinf.pstatic.net/MjAxNzAzMDVfMjM5/MDAxNDg4NzIyMjYzODA1.kMdpX6fckTj61D3tVEdjvp6rRXx9oWiErr3Nz0TRTz4g.YaAMSUD_1K17RiB5RLaBaQB5YH4A4HnwgtZmBxIqz78g.PNG.heartflow89/image.png?type=w800" width="50%" height="50%" title="2차원 배열 선언 예시"/>
-</p>
-
-<br>
-위와 같은 방법은 값을 모르는 경우에 주로 사용되며, 우선 첫 번째 방법과 같은 예제를 두 번째 방법으로 정의하는 방법에 대해 알아보자.
+* 위와 같은 예제를 작성해서 실제로 25를 입력하게 되면 아래와 같은 결과를 얻을 수 있다.
 
 ```java
-public class ArrayEx06{
-    public static void main(String[] args){
-        int[][] num = new int[4][3];
-        num[0][0] = 4; num[0][1] = 3; num[0][2] = 4;
-        num[1][0] = 3; num[1][1] = 7; num[1][2] = 6;
-        num[2][0] = 5; num[2][1] = 8; num[2][2] = 7;
-        num[3][0] = 9; num[3][1] = 9; num[3][2] = 10;
-        for(int i = 0; i < 4; i++){
-            for(int j = 0; j < 3; j++){
-                System.out.println(i+"행 "+j+"열의 값 : "+num[i][j]);
-            }
-        }
-    }
-}
+Enter your age
+>> 25
+Enter your name
+Your age is 25.
+Your name is .
 
 ```
+* nextInt()와 같이 타입을 지정해서 받는 메서드는 'Enter'값을 무시하고 해당 타입만 받아 변환 후 반환하는데, 이때 컴퓨터 내부에서는 'Enter'값이 아직 남아있기 때문에 NextLine()에서 'Enter'값을 받아들이고 그대로 입력되어 종료되는 것이다. 분명 입력할 때에는 25와 엔터만 눌렀을 뿐인데도 말이다.
 <br>
-첫 번째 방법으로 정의한 배열과 동일한 결과가 출력된다. 이제 2차원 배열과 관련된 응용 예제에 대해 몇 가지 알아보도록 하자.
-
-```java
-public class ArrayEx07{
-    public static void main(String[] args){
-        int[][] score = { {79, 80, 99},
-                          {95, 85, 89},
-                          {90, 65, 56},
-                          {69, 78, 77} };
-        int[] student = new int[4];
-        int[] subject = new int[3];
-        String[] stuName = {"A", "B", "C", "D"};
-        String[] subName = {"eng", "math", "sci"};
-
-        for (int i = 0; i < student.length; i++){
-            for(int j = 0; j < subject.length; j++){
-                student[i] += score[i][j];
-            }
-            System.out.println(stuName[i] + " 총점 : " + student[i]);
-        }
-        for(int j = 0; j < subject.length; j++){
-            for(int i = 0; i <student.length; i++){
-                subject[j] += score[i][j];
-            }
-            System.out.println(subName[j]+" 총점 : " + subject[j]);
-        }
-    }
-}
-
-```
-
-우선 4명의 학생의 과목별 점수를 2차원 배열로 저장하고, 학생별 총점과 과목별 총점을 위해 배열을 생성하였다. 그리고 학생 및 과목별 총점 계산을 위한 반복문을 정의하고, 저장된 값을 출력시켰다.
-
-
 <br>
-추가적으로 2차원 배열을 이용한 구구단을 출력하는 예제를 알아보자.
-
-```java
-public class ArrayEx08{
-    public static void main(String[] args){
-        int[][] ggd = new int[8][9];
-        for(int i = 0; i < 8; i++){
-            for(int j = 0; j < 9; j++){
-                ggd[i][j] = (i+2) * (j+1);
-                System.out.print((i+2)+"*"+(j+1)+"="+ggd[i][j]+"\t");
-            }
-            System.out.println();
-        }
-    }
-}
-
-```
-
-먼저 값 저장을 위한 배열 ggd을 생성하고, 단수(행)와 곱하기(열)를 반복시키기 위한 반복문을 정의하고 배열에 값을 저장하고 저장된 값을 출력시켰다.
+* 한가지 더, "scan을 굳이 close()로 닫아줄 필요는 없지만, 닫아주는 습관을 기르도록 하자" 라고 본문에서는 이야기하고 있지만, 굳이 닫을 필요는 없다. [왜냐하면][설명2], System.in은 외부로부터 입력을 받는데 스트림을 이용해 입력을 받지만, 거의 모든 입력에 스트림 인스턴스 사용 후 실제 닫을 필요가 없다는 공식 사이트 글이 있기 떄문이다. 리소스가 IO 채널(외부 네트워크 또는 파일 등)일 때에만 스트림을 닫아주면 된다고 한다. 아래는 공식 문서에서 관련 내용을 가져온 것이다.
+<br>
+<br>
+Streams have a BaseStream.close() method and implement AutoCloseable, but nearly all stream instances do not actually need to be closed after use. Generally, only streams whose source is an IO channel (such as those returned by Files.lines(Path, Charset)) will require closing. Most streams are backed by collections, arrays, or generating functions, which require no special resource management. (If a stream does require closing, it can be declared as a resource in a try-with-resources statement.)
 
 
 
 <br>
 [설명 출처][설명]<br>
 
-[설명]: https://m.blog.naver.com/PostView.naver?blogId=heartflow89&logNo=220950845259&navType=by
+[설명]: https://mine-it-record.tistory.com/103
+[설명2]: https://okky.kr/article/915691?note=2308988
