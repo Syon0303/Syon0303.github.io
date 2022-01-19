@@ -6,134 +6,134 @@ categories: java
 ---
 이번 포스팅에선 JAVA에서의 생성자에 대해 알아보고자 한다.
 
-<h1>생성자란 무엇인가</h1>
-* 다차원 배열이란, 2차원 이상의 배열을 의미하며, 배열 요소로 또 다른 배열을 가지는 배열을 의미한다.
-* 2차원 배열은 배열 요소로 1차원 배열을 가지는 배열이며, 3차원 배열은 배열 요소로 2차원 배열을 가지는 ...
+<h1>생성자란?</h1>
+* 생성자는 __new 연산자를 통해 인스턴스를 생성할 때 반드시 호출되고 제일 먼저 실행되는 일종의 메서드(하지만 메서드는 아님)이다.__ 생성자는 인스턴스 변수(필드 값 등)를 초기화 시키는 역할을 한다.
 
 
 <br>
-<h2>2차원 배열</h2>
-* 2차원 배열이란 배열의 요소로 1차원 배열을 가지는 배열이다. 기본적인 배열(1차원)보다야 사용 빈도가 적긴 하지만, 많이 사용되니 알아두면 좋을 것이다.
-
-2차원 배열은 아래와 같이 선언된다.
-
-<br>
-<p align="center">
-    <img src="https://mblogthumb-phinf.pstatic.net/MjAxNzAzMDVfMjQ3/MDAxNDg4NzIyMTkzMTQ4.9gK3m7XnaMiLivGafCCCZSjuJQMFe3z81fSgEnNSy3Mg.b7GeOEEVrUY7atju5i7vI-FVcdezcZ6pyW6zZRlrOBkg.PNG.heartflow89/image.png?type=w800" width="50%" height="50%" title="2차원 배열 선언 예시"/>
-</p>
-
-
-
-<br>
-2차원 배열도 기본 배열과 마찬가지로 2가지 형식으로 배열을 정의할 수 있다. 첫 번째 방식은 배열의 값을 미리 알고 있을 때 사용하게 된다. 2차원 이상의 배열들은 수학의 행렬과 비슷한 자료구조를 갖는다. 우선 간단한 예제를 통해 알아보자.
+<h2>생성자의 선언 방법</h2>
 
 ```java
-public class ArrayEx05{
+public 클래스(매개 변수){
+    ...
+}
+
+```
+* 생성자를 선언하는 방법은 위의 내용과 같다. 클래스라는 부분은 생성자를 정의하는 클래스의 이름과 동일하게 적어줘야 한다. 위의 public에 대한 내용은 추후 다룰 예정이고, 우선은 생성자를 선언할 때에는 public을 적어주면 된다.
+
+<br>
+<h2>생성자의 종류 및 사용</h2>
+위에서 생성자를 선언하는 방법을 알아보았다. 인스턴스를 생성할 때 반드시 생성자를 호출한다고 했다. 그러나 지금까지는 생성자를 정의하지 않았는데 어떻게 호출이 된 것일까? 그 이유는 클래스를 정의할 때 __생성자를 생략하면 컴파일러가 자동적으로 기본 생성자(Default Constructor)를 생성하여 주기 때문이다.__ 아래 소스 코드를 통해 알아보자.
+
+```java
+public ConstructorEx01 {
+    // public ConstructorEx01(){} // Default Constructor 자동 생성
+
     public static void main(String[] args){
-        int[][] num = { {4, 3, 4},
-                        {3, 7, 6},
-                        {5, 8, 7},
-                        {9, 9, 10} };
+        ConstructorEx01 ce = new ConstructorEx01(); // 인스턴스 생성 및 생성자 호출
+    }
+}
+
+```
+* 위의 내용처럼 인스턴스를 생성할 때 생성자를 호출한다. 생성자를 생략하면 주석 처리된 부분이 자동으로 생성되며, 이번에는 기본 생성자를 직접 정의하는 방법을 알아보자.
+<br>
+
+```java
+public class ConstructorEx01{
+    public ConstructorEx01(){
+        System.out.println("생성자 호출 성공");
+    }
+
+    public static void main(String[] args){
+        ConstructorEx01 ce = new ConstructorEx01(); // 인스턴스 생성 및 생성자 호출
+    }
+}
+
+```
+* 처음 예제와 비교하자면 생성자를 직접 정의하였고, 생성자 내부에 소스 코드 한 줄을 추가하였다. 결과는 "생성자 호출 성공"이 출력된다.
+* 생성자를 선언할 때 매개변수를 괄호 안에 가질 수 있다고 했고, 그것에 대한 예제를 알아보자.
+<br>
+
+```java
+public class ConstructorEx02{
+    public ConstructorEx02(String a){
+        System.out.println(a + "생성자 호출 성공");
+    }
+
+    public static void main(String[] args){
+        ConstructorEx02 ce = new ConstructorEx02("사용자 정의" ); // 인스턴스 생성 및 생성자 호출
+        // ConstructorEx02 ce2 = new ConstructorEx02(); // 컴파일 에러
+    }
+}
+
+```
+* 매개변수를 갖는 생성자를 정의하였고, main 메서드에서 생성자를 호출하였다. 결과는 '사용자 정의 생성자 호출 성공'이 출력된다.
+* 주석 처리된 부분은 기본 생성자를 호출하지만, 컴파일 에러가 발생한다. __이는 사용자가 정의한 생성자가 있어서 Default 생성자를 더 이상 자동으로 만들어주지 않기 때문이다.__
+<br>
+
+```java
+public class ConstructorEx03{
+    public ConstructorEx03(){
+        System.out.println("생성자 호출 성공");
+    }
+    public ConstructorEx03(String a){
+        System.out.println(a + "생성자 호출 성공");
+    }
+
+    public static void main(String[] args){
+        ConstructorEx03 ce = new ConstructorEx03("사용자 정의"); // 매개변수를 갖는 생성자
+        ConstructorEx03 ce2 = new ConstructorEx03(); // 기본 생성자 호출
+    }
+}
+
+```
+* 기본 생성자를 사용자가 추가하였고, 정상적으로 결과가 출력된다. 참고로 __생성자의 매개변수를 다르게 지정하여 정의하는 것을 생성자 오버로딩__ 이라고 한다.
+* 생성자의 역할은 인스턴스를 초기화 시킨다고 했는데, 무엇을 의미하는지는 소스 코드를 통해 알아보자.
+<br>
+
+```java
+class CalculatorEx{
+    int a;
+    int b;
+
+    public CalculatorEx(){
+        a = 10;
+        b = 20;
+    }
+
+    public CalculatorEx(int num1, int num2){
+        a = num1;
+        b = num2;
+    }
+
+    public void sum(){
+        System.out.println("합계 : " + (a + b));
+    }
+}
+
+public class ConstructorEx04{
+    public static void main(String[] args){
+        CalculatorEx cc = new CalculatorEx();
+        cc.sum();
         
-        for(int i = 0; i < 4; i++){
-            for(int j = 0; j < 3; j++){
-                System.out.println(i+"행 "+j+"열의 값 : "+num[i][j]);
-            }
-        }
+        CalculatorEx cc2 = new CalculatorEx(0, 10);
+        cc2.sum();
     }
 }
 
 ```
-<br>
-4행 3열짜리 배열을 정의하였고, 배열에 저장된 값 출력을 위해 이중 반복문을 작성하였다.
-
-
-2차원 배열을 정의하는 두 번째 방법은 아래와 같다.
-
-<br>
-<p align="center">
-    <img src="https://mblogthumb-phinf.pstatic.net/MjAxNzAzMDVfMjM5/MDAxNDg4NzIyMjYzODA1.kMdpX6fckTj61D3tVEdjvp6rRXx9oWiErr3Nz0TRTz4g.YaAMSUD_1K17RiB5RLaBaQB5YH4A4HnwgtZmBxIqz78g.PNG.heartflow89/image.png?type=w800" width="50%" height="50%" title="2차원 배열 선언 예시"/>
-</p>
-
-<br>
-위와 같은 방법은 값을 모르는 경우에 주로 사용되며, 우선 첫 번째 방법과 같은 예제를 두 번째 방법으로 정의하는 방법에 대해 알아보자.
-
-```java
-public class ArrayEx06{
-    public static void main(String[] args){
-        int[][] num = new int[4][3];
-        num[0][0] = 4; num[0][1] = 3; num[0][2] = 4;
-        num[1][0] = 3; num[1][1] = 7; num[1][2] = 6;
-        num[2][0] = 5; num[2][1] = 8; num[2][2] = 7;
-        num[3][0] = 9; num[3][1] = 9; num[3][2] = 10;
-        for(int i = 0; i < 4; i++){
-            for(int j = 0; j < 3; j++){
-                System.out.println(i+"행 "+j+"열의 값 : "+num[i][j]);
-            }
-        }
-    }
-}
-
-```
-<br>
-첫 번째 방법으로 정의한 배열과 동일한 결과가 출력된다. 이제 2차원 배열과 관련된 응용 예제에 대해 몇 가지 알아보도록 하자.
-
-```java
-public class ArrayEx07{
-    public static void main(String[] args){
-        int[][] score = { {79, 80, 99},
-                          {95, 85, 89},
-                          {90, 65, 56},
-                          {69, 78, 77} };
-        int[] student = new int[4];
-        int[] subject = new int[3];
-        String[] stuName = {"A", "B", "C", "D"};
-        String[] subName = {"eng", "math", "sci"};
-
-        for (int i = 0; i < student.length; i++){
-            for(int j = 0; j < subject.length; j++){
-                student[i] += score[i][j];
-            }
-            System.out.println(stuName[i] + " 총점 : " + student[i]);
-        }
-        for(int j = 0; j < subject.length; j++){
-            for(int i = 0; i <student.length; i++){
-                subject[j] += score[i][j];
-            }
-            System.out.println(subName[j]+" 총점 : " + subject[j]);
-        }
-    }
-}
-
-```
-
-우선 4명의 학생의 과목별 점수를 2차원 배열로 저장하고, 학생별 총점과 과목별 총점을 위해 배열을 생성하였다. 그리고 학생 및 과목별 총점 계산을 위한 반복문을 정의하고, 저장된 값을 출력시켰다.
+* 별도의 클래스를 하나 정의하였고 필드변수 (int a, int b)를 선언하였다. 기본 생성자와 매개변수를 갖는 생성자를 정의하고 메서드에서 합을 구하는 코드를 추가하였다.
+* main 메서드에서 __인스턴스를 생성하면서 생성자를 호출하였고, 호출된 생성자에 의해 필드변수가 초기회되었다.__ 그리고 인스턴스로 메서드를 호출하여 값을 출력한다.
 
 
 <br>
-추가적으로 2차원 배열을 이용한 구구단을 출력하는 예제를 알아보자.
-
-```java
-public class ArrayEx08{
-    public static void main(String[] args){
-        int[][] ggd = new int[8][9];
-        for(int i = 0; i < 8; i++){
-            for(int j = 0; j < 9; j++){
-                ggd[i][j] = (i+2) * (j+1);
-                System.out.print((i+2)+"*"+(j+1)+"="+ggd[i][j]+"\t");
-            }
-            System.out.println();
-        }
-    }
-}
-
-```
-
-먼저 값 저장을 위한 배열 ggd을 생성하고, 단수(행)와 곱하기(열)를 반복시키기 위한 반복문을 정의하고 배열에 값을 저장하고 저장된 값을 출력시켰다.
-
-
+<h2>생성자의 특징 (메서드와의 차이)</h2>
+* 생성자는 반드시 __클래스명과 동일하게 정의__ 해야 한다.
+* 생성자 앞에는 __접근 제어자(public 따위와 같은)만 올 수 있다.__ (메서드와 다르게 static 따위의 수식어 불가능)
+* __반환 값이 없으므로 void도 필요 없다.__ (메서드는 void 따위와 같은 자료형이 있어야 함)
+* 그 외에도 상속이 되지 않거나 하는 차이가 있다.
 
 <br>
 [설명 출처][설명]<br>
 
-[설명]: https://m.blog.naver.com/PostView.naver?blogId=heartflow89&logNo=220950845259&navType=by
+[설명]: https://blog.naver.com/PostView.nhn?isHttpsRedirect=true&blogId=heartflow89&logNo=220955879645
