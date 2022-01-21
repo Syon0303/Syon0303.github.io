@@ -4,7 +4,7 @@ title:  "Scanner"
 date:   2022-01-19 19:17:36 +0900
 categories: java
 ---
-이번 포스팅에선 JAVA에서의 Scanner에 대해 알아보고자 한다.
+이번 포스팅에선 JAVA 에서의 Scanner에 대해 알아보고자 한다.
 
 <h1>Scanner Class</h1>
 * 읽은 바이트를 문자, 정수, 실수, boolean, 문자열 등 __다양한 타입으로 변환하여 return하는 클래스이다.__ (단, char는 없음)
