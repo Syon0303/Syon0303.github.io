@@ -28,6 +28,7 @@ categories: java
 
  
  <br>
+
 ```java
 public class ArrayEx01 {
     public static void main(String[] args){
@@ -89,6 +90,7 @@ score라는 int 형 배열을 만들고 계산과 형변환을 통해 총합과 
 두 번째 방법으로 배열을 정의하는 예제를 살펴보자.
 
 <br>
+
 ```java
 public class ArrayEx03{
     public static void main(String[] args){
@@ -140,6 +142,7 @@ public class ArrayEx04 {
 마무리하기 전에, 향상된 for문(for-each)에 대해서도 설명하고자 한다. 지금까지 사용하던 반복문을 사용해도 되지만, 배열을 사용하여 반복시킬 때 조금 더 편리한 방법이 있는데, 그것이 for-each 문이다. 정의하는 방법은 아래와 같다.
 
 <br>
+
 ```java
 for (자료형 변수 : 배열) {
     반복 실행할 문장;
@@ -150,6 +153,7 @@ for (자료형 변수 : 배열) {
 위에서 살펴봤던 예제와 비슷한 내용으로 for-each문을 작성해보면 다음과 같다.
 
 <br>
+
 ```java
 public class ForEachEx01{
     public static void main(String[] args){
