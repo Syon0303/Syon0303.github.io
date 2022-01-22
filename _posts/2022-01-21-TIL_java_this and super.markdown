@@ -102,9 +102,9 @@ public class Child extends Parent{
         this("daughter", "son");
     }
     
-    public ChildClass(String daughter, String son){
+    public Child(String daughter, String son){
         //super();
-        super("child.mother", "child.father");
+        super("child.mother", "child.father"); // 여기서 Parent의 생성자를 호출한다.
         this.daughter = daughter;
         this.son = son;
     }
@@ -146,7 +146,9 @@ child.father/child.mother/daughter/son
 
 <b4>Child 객체 생성 時 (Child ch = new Ch)호출 순서</b4>
 * Child() 생성자 호출
-* this()에 의해 
+* this()에 의해 Child(String, String) 생성자 호출
+* super()에 의해 Parent(String, String) 생성자 호출
+* Child 객체(ch) 생성됨
 
 
 <br>
