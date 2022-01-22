@@ -1,13 +1,91 @@
 ---
 layout: post
-title:  "this, super"
+title:  "Overriding과 this, 그리고 super"
 date:   2022-01-21 19:17:36 +0900
 categories: java
 ---
 이번 포스팅에선 JAVA 에서의 this와 super에 대해 알아보고자 한다.
 
-<h2>this</h2>
+<h2>Overriding</h2>
+* 부모 클래스로부터 상속받은 메서드를 자식 클래스에서 재정의하여 사용하는 것이다.
+* 부모 클래스에서 정의된 메서드가 자식 클래스에서 다르게 정의가 필요할 때 사용된다. 
+* 일반 클래스의 상속 관계에서는 많이 사용되는 개념은 아니지만, 추상 클래스나 인터페이스를 상속받을 때에는 반드시 사용되는 개념이다.
+
+
+<h3>Overriding의 조건 및 방법</h3>
+* 자식 클래스에서 부모 클래스의 메서드를 재정의 하기 위해서는 조건을 지켜야한다.
+* __부모 메서드의 이름, 반환 타입, 매개변수의 수, 자료형, 순서를 동일하게__ 하여 자식 클래스에서 작성해야 한다. 
+* 접근 제어자는 주로 부모 클래스와 동일하게 사용하지만, 접근 범위를 넓게 지정할 순 있다.(default -> public과 같이)
+* 아래는 Overriding의 예시 코드이다.
+
+```java
+class SuperClass{
+    public void check(){
+        System.out.println("Parent method");
+    }
+
+    public void sum(int x, int y){
+        int sum = 0;
+        for (int i = x; i <= y; i++){
+            sum += i;
+        }
+        System.out.println("sum : " + sum);
+    }
+}
+
+class SubClass extend SuperClass{
+    
+    // method overriding
+    public void check(){ 
+        System.out.println("Child method");
+    }
+
+    // method overriding
+    public void sum(intx, int y){
+        int sum = 0;
+        int odd = 0;
+        int even = 0;
+
+        for (int i = x; i <= y; i++){
+            sum += i;
+            if(i % 2 == 0){
+                even += i;
+            }
+            else {
+                odd += i;
+            }
+        }
+        System.out.println("Sum : " + sum);
+        System.out.println("even sum : " + even + "/ odd sum : " + odd);
+        // super.sum(x, y); // 부모 메서드 호출
+    }
+}
+
+public class OverridingEx01{
+    public static void main(String[] args){
+        SubClass sub = new SubClass();
+        sub.check();
+        sub.sum(0, 10);
+    }
+}
+```
+
+* 부모 클래스에서 2개의 메서드를 정의하였고, 자식 클래스에서 부모 클래스를 상속받아 메서드를 재정의하였다.
+* main 메서드에서 자식 클래스로 인스턴스를 생성하고 메서드를 각각 호출한 결과 자식 클래스의 메서드가 데이터로 출력되는 것을 확인하였다.
+* __부모의 메서드는 은닉되고 자식 클래스의 재정의된 메서드만 호출__ 된다.
+* 이때 부모의 메서드를 호출하고 싶다면 super.sum(int, int)로 호출이 가능하고 위 소스 코드의 주석을 해제하면 부모 메서드가 호출된다.
+
+
+<h3>Overriding 요약</h3>
+* Overriding이란 __상속받은 메서드를 자식 클래스에서 재정의해서 사용하는 것__ 이다.
+* 자식 클래스에서 __부모의 메서드를 수정해야 할 때__ 사용된다. 일반 클래스의 상속 관계에서는 많이 사용되지는 않고 __추상 클래스나 인터페이스에서 필수적으로 사용되는 개념__ 이다.
+* 자식 클래스에서 부모 클래스의 메서드와 __동일한 시그니쳐(메서드 이름, 리턴 타입, 매개변수의 수, 자료형, 순서)__ 를 적용해야 한다.
+* Overriding 결과 __부모 메서드는 은닉__ 되고, __자식 클래스에서 재졍의된 메서드만 기본적으로 호출__ 된다. __필요 時 super.으로 부모 메서드를 호출__ 할 수 있다.
+
+<hr/>
+
 <br>
+<h2>this</h2>
 * 현재 클래스의 Instance를 의미한다.
 * 즉, 현재 Class의 멤버변수를 지정할 때 사용한다.
 
@@ -35,6 +113,8 @@ public class Paraent{
 }
 ```
 
+
+<br>
 <h3>그렇다면, this()란 무엇일까?</h3>
 * 현재 클래스에 정의된 생성자를 부를때 사용한다.
 * 아래는 Praent Class의 Constructor가 2개 있을 경우, Constructor Value가 들어오지 않는 경우에 this() 메서드를 사용하여 두 번째 Constructor를 불러 초기화하는 코드이다.
@@ -60,8 +140,11 @@ public class Parent{
     }
 }
 ```
+<br>
+<hr/>
 
 
+<br>
 <h2>super</h2>
 * 자식 클래스에서 상속받은 부모 클래스의 멤버변수를 참조할 때 사용한다.
 * 아래는 super를 사용하는 예제이다.
@@ -88,6 +171,7 @@ public class Child extends Parent{
 ```
 
 
+<br>
 <h3>super()</h3>
 * 자식 클래스가 자신을 생성할 때 부모 클래스의 Constructor를 불러 초기화할 때 사용한다.
 * 기본적으로는 자식 클래스의 Constructor에 추가된다.
@@ -152,70 +236,11 @@ child.father/child.mother/daughter/son
 
 
 <br>
-<p align="center">
-    <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fxy28c%2FbtqFa77tFXV%2FBEOrJ7TikSk3fAfpnEhUJK%2Fimg.png" width="50%" height="50%" title="IS-A관계"/>
-</p>
 
-<h2>HAS - A</h2>
-* ~ 를 가진다.
-* HAS-A 관계에서는 상속을 사용하지 않는다.
-* HAS-A 관계(Has a relationship, association)는 일반적인 포함 개념의 관계이다.
-* HAS-A 관계는 다른 클래스의 기능(변수 혹은 메서드)을 받아들여 사용한다.
+[Overriding 출처][재정의]<br>
+[this & super 출처][설명]<br>
+[this & super 출처2][설명2]<br>
 
-
-<br>
-<h2>상속의 잘못된 생각</h2>
-* __상속을 코드 재사용의 개념으로 이해하면 안된다.__
-* 코드를 재사용할 수 있다고 마구잡이로 잘못 사용하는 경우가 있는데, 상속을 사용하면 클래스 間 결합도가 높아져 상위 클래스를 수정해야할 때 하위클래스에 미치는 영향이 매우 크다. 
-* 결국, 상속은 IS-A 관계에서 사용해야 한다고 볼 수 있다.
-
-
-<br>
-<h2>나의 생각 및 정리</h2>
-* 결국 HAS-A 관계는 멤버변수화라고 생각한다. (Computer Class에 CPU와 RAM, MainBoard Class가 존재하듯)
-* 상속은 형제는 따지지 않으며 위아래만 따진다.
-
-HAS-A 관계의 예를 들어보자.
-```java
-public Class Cpu{
-    String productCompany = intel;
-    String series = coreI;
-    int generation = 12;
-}
-
-public Class Ram{
-    String productCompany = samsung;
-    String classification = ddr4;
-    int capacity = 8;
-    boolean isDesktop = true;
-    int bandwidth = 2666;
-}
-
-public Class Computer {
-    CPU cpu;
-    RAM ram;
-}
-
-```
-위 코드에서, Computer와 Cpu(또는 Ram) Class 사이의 관계가 상속을 받아야 된다고 생각하는가? 아니다. IS-A 관계를 생각해보자. 
-* 컴퓨터는 CPU 이다. (X)
-* CPU는 컴퓨터 이다. (X)
-
-
-둘 다 뭔가 이상하다. 그렇다면 ~ 를 가진다를 대입해보자.
-* 컴퓨터는 CPU를 가진다. (O)
-* CPU는 컴퓨터를 가진다. (X)
-
-
-<br>
-결국, HAS-A 관계는 하나의 객체가 다른 객체를 "(부분으로서) 갖거나" 하는 경우에 사용하는 것을 알 수 있다.
-<br>
-만약, IS-A 관계가 확실한지에 대해 의문을 가진다면, HAS-A 관계를 한번 생각해보자. 
-
-
-<br>
-[설명 출처][설명]<br>
-[설명 출처2][설명2]<br>
-
-[설명]: https://zangzangs.tistory.com/44
-[설명2]: https://minusi.tistory.com/entry/%EA%B0%9D%EC%B2%B4-%EC%A7%80%ED%96%A5%EC%A0%81-%EA%B4%80%EC%A0%90%EC%97%90%EC%84%9C%EC%9D%98-has-a%EC%99%80-is-a-%EC%B0%A8%EC%9D%B4%EC%A0%90
+[재정의]: https://blog.naver.com/PostView.naver?blogId=heartflow89&logNo=220961515893&redirect=Dlog&widgetTypeCall=true&directAccess=false
+[설명]: https://blog.naver.com/PostView.naver?blogId=heartflow89&logNo=220961515893&redirect=Dlog&widgetTypeCall=true&directAccess=false
+[설명2]: https://ithub.tistory.com/66
