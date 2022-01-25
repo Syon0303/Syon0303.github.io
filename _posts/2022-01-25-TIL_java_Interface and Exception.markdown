@@ -32,6 +32,8 @@ public interface 인터페이스명{
 }
 ```
 <br>
+
+
 * 상수 : 인터페이스에서 값을 정해줄테니 함부로 바꾸지 말고 제공해주는 값만 참조해라. (절대적)
 * 추상메서드 : 가이드만 줄테니 추상메서드를 Override해서 재구현해라. (강제적)
 * 디폴트메서드 : 인터페이스에서 기본적으로 제공해주지만, 맘에 안들면 각자 구현해라. (선택적)
@@ -73,7 +75,7 @@ public interface Bank{
 그냥 추상메서드를 추가해서 다시 가이드하면 안되나? 라고 생각했지만.. 각 은행사마다 개발 환경 및 운영 환경이 다르고, 휴면계좌 찾아주기 신규 프로세스를 도입하는데 있어서 은행사마다 개발기간이 모두 상이하기때문에 조금은 러프한 메서드를 추가해주어야한다. __만약 추상메서드를 인터페이스에서 추가한다면, 이를 implements한 모든 클래스에서 강제적으로 추상메서드를 구현해야하고 구현하지 않을 시 전부 에러가 난다.__ <br><br>
 그러나 디폴트 메서드를 정의하고 기본 구현부를 제공한 후 만약 맘에 들지 않는다면 각자 오버라이딩하여 재구현하도록 선택적인 메서드로 가이드한다면 시스템 운영 유지보수성이 확보될 것이다.<br><br>
 __이미 운영되고 있는 시스템에서 추가 요건으로 인해 불가피하게 반영해야할 때 디폴트메서드를 사용하면 효과적이란 이야기이다.__ <br><br>
-이제, KB은행, SH은 규격화된 Bank 인터페이스를 통해 각자에 맞는 스타일대로 은행 인출/입금 서비스를 제공한다.
+이제, KB은행, SH은행은 규격화된 Bank 인터페이스를 통해 각자에 맞는 스타일대로 은행 인출/입금 서비스를 제공해보자.
 
 ```java
 public class KBBank implements Bank{
@@ -95,6 +97,7 @@ public class KBBank implements Bank{
 }
 
 ```
+<br>
 KB은행 휴면계좌 찾아주기 메서드를 재구현하지 않았다. 이는 금융결제원이 제공해주는 메서드를 사용하겠다는 뜻이거나 혹은 아직 사용하지 않겠다라고 이해하면 된다.
 
 ```java
@@ -127,6 +130,7 @@ public class SHBank implements Bank{
 }
 
 ```
+<br>
 하지만 SH은행에서는 휴면계좌 찾아주기 메서드를 재정의하여 SH은행사만의 휴면계좌 찾아주기 로직을 재구현했다.
 
 ```java
@@ -147,315 +151,127 @@ public class KakaoBank{
 }
 
 ```
-
 <br>
-<h3>다형성을 구현하는 방법</h3>
-다형성을 구현하는 방법은 대표적으로 오버로딩, 오버라이딩, 함수형 인터페이스를 사용하는 방법이 있다. (단, 이번 포스팅에서 함수형 인터페이스는 다루지 않는다.)
+신규 은행사 카카오뱅크는 인터페이스를 Implements 하지 않은 채 자신만의 메서드를 구현했다. 이는 금융결제원에서 제공해주는 그 어떠한 서비스도 사용할 수 없으며 호환성이 없으며 연동이 불가능할 것이다.<br><br>
+아래 메인 소스를 보면 bank = new KakaoBank(); 부분에서 type mismatch 에러가 날 것이다. 또한, 자바의 다형성을 극대화하여 개발 코드 수정을 줄일 수 있는데 어떤 부분에서 가능한 것일까? <br><br>
+만약 이 메인함수가 특정 대학교에 등록금 인출, 입금 등의 업무와 관련있는 소스라고 하자. 간혹 등록금 납부 주관 은행을 교체하기도 하는데, 믈론 가상 계좌를 통해 납입하지만 주은행을 변경하게 되면 대학교 등록금 납부 시스템에 기존은행에서 교체할 은행으로 변경해줘야한다.<br><br>
+이럴 경우 간단하게 인스턴스만 바꾸면 호환성이 보장된 상태에서 동일한 기능을 수행할 수 있을 것이다.
 
 
-<br>
-<h4>Overloading</h4>
-한 클래스 내에 이미 사용하는 이름의 메서드가 있어도 규칙 내에서 동일한 이름의 메서드를 정의하도록 허용하는 기술
-1. 메서드의 이름이 같아야 한다.
-2. 매개 변수의 개수 또는 타입이 달라야 한다.
-3. 매개 변수는 같고, 리턴 타입이 다를 때는 성립하지 않는다.
-4. 오버로딩된 메서드들은 매개 변수로만 구분될 수 있다.
-<br>
+<h4>정리</h4>
 
-__주의할 점으로, 요구 사항이 바뀌었을 때 모든 메서드를 수정할수도 있으므로 꼭 필요한 경우에만 사용해야한다.__ 일반적인 메서드보다는 Constructor 오버로딩을 주로 사용한다.
+__인터페이스는 추상메서드와 상수를 통해 강력한 강제성을 가지게 하여 인터페이스를 Implements한 클래스가 동일한 동작을 수행하도록 보장한다.__
 
-```java
-public class Station{
-    private Long id;
-    private String name;
-
-    public Station(){}
-
-    public Station(String name){
-        this(null, name);
-    }
-
-    public Station(Long id, String name){
-        this.id = id;
-        this.name = name;
-    }
-}
-
-```
-위와 같이 Station Class의 필드를 초기화해 주는 조건이 여러 가지가 있을 수 있는데, Constructor 오버로딩을 통해 쉽게 구현할 수 있다. 
-
-
-<br>
-<h4>Overriding</h4>
-* 상위 클래스의 메서드를 재정의하는 것을 의미한다.
-* 클래스 상속이나 인터페이스 상속을 통해 구현할 수 있다.
-
-아래 예시는 운송 수단에 대한 예시로 운송 수단의 종류인 자동차, 비행기, 기차가 있다고 하자. 모두 움직일 수 있으므로 move() 메서드를 각각 아래와 같이 정의할 수 있다.
-
-```java
-public class Car{
-    public void move(){
-        System.out.println("도로로 달린다.");
-    }
-}
-
-public class Airplane{
-    public void move(){
-        System.out.println("하늘을 난다.");
-    }
-}
-
-public class Train{
-    public void move(){
-        System.out.println("선로를 주행한다.");
-    }
-}
-
-```
-
-이후에, 각각의 운송수단을 움직여보자.
-
-```java
-public class Main{
-    public static void main(String[] args){
-        final Car car = new Car();
-        final Airplane airplane = new Airplane();
-        final Train train = new Train();
-
-        car.move();
-        airplane.move();
-        train.move();
-    }
-}
-
-```
-<br>
-각각의 운송수단을 움직이기 위해 서로 다른 객체를 만들어서 move() 메서드를 실행해 주었다. 그러나 100가지의 운송수단이 생긴다면 move() 메서드를 100번 타이핑해야한다. 이들을 반복문으로 묶어줄 수 없기 때문이다. 이때 Overridng을 사용한다면 위의 문제를 해결할 수 있다.
-<br><br>
-이번 포스팅에선 인터페이스를 사용하여 구현하자. 우선 Movable(인터페이스는 보통 ~able이다.)이라는 인터페이스를 만들자. 이 인터페이스의 메서드로는 move()가 있고, Car, Train, Airplane에 상속해주자. 그리고 하위 클래스들은 Move() 메서드를 Overridng하자.
-
-```java
-public interface Movable{
-    void move();
-}
-
-public class Car implements Movable{
-    @Override
-    public void move(){
-        System.out.println("도로로 달린다.");
-    }
-}
-
-public class Airplane implements Movable{
-    @Override
-    public void move(){
-        System.out.println("하늘을 난다.");
-    }
-}
-
-public class Train implements Movable{
-    @Override
-    public void move(){
-        System.out.println("선로를 주행한다.");
-    }
-}
-
-```
-
-이제 Movable이라는 객체는 Car가 될 수도 있고, Airplane이 될 수도 있고, Train이 될 수도 있다. 이는 __한 객체에 여러 타입을 대응할 수 있다__ 는 것을 몸소 보여주는 예시이다. 그래서 아래와 같이 다형성을 이용하여 Car, Airplane, Train의 move() 메서드를 호출할 수 있다.
-
-```java
-public class Main{
-    public static void main(String[] args){
-        final List<Movable> movables = Array.asList(new Car(), new Train(), new Airplane());
-        for (final Movable movable : moveables){
-            movable.move();
-        }
-    }
-}
-
-```
 
 <br>
 <hr/>
-<br>
-
-<h3>자동 타입 변환(promotion)</h3>
-* 자동 타입 변환은 부모 타입의 참조변수에 자식 객체의 주소를 넣는 행위를 뜻한다.
+<h2>Exception</h2>
+* 자바에서의 런타임 오류는 Error와 Exception으로 나누어져 있다.
+* 에러는 프로그램이 코드로 복구될 수 없는 오류를 의미하고, 예외는 프로그래머가 직접 예측하여 막을 수 있는 처리가능한 오류이다.
+* 예를 들어, 메모리가 부족한 경우 프로그래머의 제어가 불가능하므로 OOM(Out Of Memory)가 발생할 것이며, 함수 호출이 많아 스택이 쌓일 경우에는 StackOverFlowError가 발생할 것이다.
 
 ```java
-Parent p1 = new Child();
-```
+int a, b;
+a = 10;
+b = 0;
 
-* 상속 관계에서 자식클래스는 상속받은 데이터 + __α__ 의 데이터를 갖고 있다. 그러나 자동 타입 변환을 하게되면 __상속받은 데이터__ 만을 사용할 수 있다.
-* 이는 타입이 자료형이기 때문인데, 우리가 자료형을 정의하는 목적은 __'범위'__ 를 설정해주기 위해서이다.
-* int 형은 대충 -21억에서 21억사이의 정수를 표현할 수 있다. 자료형은 범위를 설정하여 메모리 낭비를 방지한다. 예를 들어 자료형이 8byte인 double 형 밖에 없다고 가정하면, 나는 정수만 사용할거라 4byte면 충분한데도 어쩔수 없이 8byte를 사용해야한다. 이처럼 데이터 별로 적당한 타입을 지정해주지 않으면 지나친 메모리 낭비를 유발한다.
+int c = a / b;
+System.out.println(c);
+```
+<br>
+위 코드는 에러가 발생한다. 어떤 수를 0으로 나눌 수는 없기 때문에 ArithmeticException 에러가 나올 것이다.<br>
+그러나 조건문을 통해서 0으로 나누지 못하게 막을 수 있다. 이처럼 우리가 예측가능한 상황에서 오류를 제어할 수 있는 것이 예외이다.<br>
+예외는 Compile시에 발견할 수 있는 예외와 프로그램 실행 시에 발생하는 예외 두 종류가 있다. Compile 시에 발생할 수 있는 예외는 각종 IDE가 막아주기도 한다.<br>
+그러나 Compile 시에 발견하지 못하는 에러를 Runtime 에러라고 하는데, 이는 프로그래머가 예측해야 한다. 그리고 그런 예외가 발생했을 때 어떤 동작을 처리해야하는지를 예외 처리라고 한다.
+
+
+<br>
+<h2>예외 처리</h2>
+
+예외가 발생했을 때, try...catch...finally 라는 키워드로 예외를 처리할 수 있거나 메서드를 호출한 곳으로 던질 수 있다. 한 가지 중요한 점은 자바에서 __모든 예외는 Exception이라는 클래스를 상속__ 받는다는 것이다. Exception의 상속 트리를 보자.
 
 <p align="center">
-    <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FBeBLn%2Fbtq7DsP0Bs1%2FISPmM4m3gwT7Kcn4yPJgi1%2Fimg.png" width="45%" height="45%" title="데이터 표현 범위"/>
-</p>
+    <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbZDGhx%2Fbtq1I7rwySp%2FRsGRdGQ7TmuayB5jTi5CTK%2Fimg.png" width="100%" height="100%" title="데이터 표현 범위"/>
+</p><br>
 
-참조 타입도 이와 마찬가지다. 참조 타입은 해당 클래스가 지정한 필드와 메서드를 '범위'로 가진다. 그러므로 해당 __참조 타입으로 생성된 객체는 그 범위를 벗어날 수 없다.__
+<h4>try catch finally</h4>
+예외를 처리하는 방식은 다음과 같다.
 
 ```java
-public class Main{
-    public static void main(String[] args){
-        Child ch1 = new Child();
-        Parent ch2 = new Child(); // 자동 타입 변환
+try{
+	//예외가 발생될만한 코드
+}catch(FileNotFoundException e){	//FileNotFoundException이 발생했다면
 
-        if(ch1 == ch2){
-            System.out.println("같은 객체입니다"); // 타입은 달라도 객체는 같다.
-        }
-    }
+}catch(IOException e){ //IOException이 발생했다면
+
+}catch(Exception e){	//Exception이 발생했다면
+
+}finally{	
+	///어떤 예외가 발생하던 말던 무조건 실행
 }
 ```
 <br>
-ch1과 ch2가 가리키는 객체가 같다는 의미는 두 참조변수 모두 Child 클래스의 객체를 참조하고 있다는 의미이다. 하지만 둘은 '타입'이 다르다. 다시말해서, 표현할 수 있는 '범위'가 다르다는 것이다.
+그러나 아래와 같이 상속관계에 있는 예외 중 부모가 위의 catch, 그리고 그 자식 예외 클래스가 아래의 catch로 놓일 수는 없다.
 
 ```java
-// 부모 클래스
-public class Parent{
-    public void a(){
-        System.out.println("나는 부모다.");
-    }
+try{
+	//.. 중략 ..//
+} catch (Exception e){
+	//컴파일 오류 발생
+} catch (IOException e){
+
 }
-
-public class Child extends Parent{
-    // 상속 받은 메서드
-    public void a(){
-        System.out.println("나는 자식이다.");
-    }
-
-    // 자식만 가지는 메서드
-    public void b(){
-        System.out.println("나만 갖고있다");
-    }
-}
-
 ```
 <br>
-이처럼 서로 같은 객체를 참조하고 있지만, 선언된 참조변수의 타입이 달라 표현 가능한 데이터의 범위가 서로 다르다. ch2는 부모 타입을 참조변수로 갖고 있기 떄문에 부모 클래스에게 상속받은 메서드와 필드만 사용 가능하다. 만약 상속받은 메서드가 오버라이딩되었다면, 오버라이딩 된 메서드를 호출한다.
+Exception 클래스는 모든 예외의 부모이기때문에 Exception을 IOException보다 위에서 처리할 수 없다. 왜냐하면, IOException의 catch 블록은 도달할 수 없기 떄문이다.
+
+
+<h4>throws</h4>
+아까 예외를 그냥 던질 수 있다고 했는데, 이 의미는 예외를 여기서 처리하지 않을테니 나를 불러다가 쓰는 녀석에게 에러 처리를 전가하겠다는 의미이며 코드를 짜는 사람이 이 선언부를 보고 어떤 예외가 발생할 수 있는지도 알게 해준다. 아래의 코드를 보자.
 
 ```java
-public class Main{
-    public static void main(String[] args){
-        Child ch1 = new Child();
-        Parent ch2 = ch1;
-
-        ch1.b();
-        ch2.b(); //자동형변환타입. 실행되지 않는다.
-    }
+public static void divide(int a,int b) throws ArithmeticException {
+	if(b==0) throw new ArithmeticException("0으로 나눌 수는 없다니까?");
+	int c=a/b;
+	System.out.println(c);
 }
-
-```
-
-```java
-public class Main{
-    public static void main(String[] args){
-        Child ch1 = new Child();
-        Parent ch2 = ch1;
-
-        ch1.a();
-        ch2.a(); //자동형변환타입.
-    }
-}
-
-```
-
-<h4>매개변수로 받는 자동 타입 변환</h4>
-자동 타입 변환을 매개변수로도 할 수 있다.
-
-```java
-// 자식 클래스
-public class Child extends Parent{
-    // 오버라이딩된 메서드
-    public void a(){
-        System.out.println("나는 자식");
-    }
-
-    public void b(Parent parent){ // 매개변수로 자동 변환됨
-        parent.a();
-    }
+public static void main(String[] ar){
+	int a=10;
+	int b=0;
+		
+	divide(a,b);
 }
 ```
-
-```java
-// 메인 클래스
-public class Main{
-    public static void main(String[] args){
-        Child ch1 = new Child();
-        ch1.b(new Child());
-    }
-}
-```
-
-위 코드의 출력 결과로는 <br>
-__나는 자식__ <br>
-이 출력된다. (매개변수로 자식 객체가 들어갔으니 메서드가 오버라이딩된 메서드로 호출된다.)
-
-
 <br>
-<h4>강제 타입 변환(Casting)</h4>
-부모타입으로 선언된 자식 객체는 자신의 메서드나 필드를 사용할 수 없다. 그래서 만약 이를 사용하는 경우 Casting을 해준다.
+divide() 메서드는 a와 b를 나눈 후에 출력하는 역할을 하는데, 이 나누기 부분에서 우리는 예외가 발생했음을 알 수 있다. 그래서 try, catch를 사용하여 예외 처리를 해야 하지만, devide()를 호출하는 부분에서 처리하기를 원한다. 왜냐하면, __divide()를 호출한 곳에서 예외가 발생한 다음의 처리를 divide() 메서드가 정하지 않기__ 떄문이다. 예를 들어, main 메서드에서는 예외가 발생하면 다시 divide()를 호출하거나, 프로그램을 끝내거나, b의 값을 다시 입력받거나 해야하기 때문이고, divde() 메서드가 그 결정을 할 수 없다는 의미이다. 그래서 throws, ArithmetricException을 divide를 호출한 Main에 던지는(throw) 것이다. 여기서 예외를 던지는 방법은 아래와 같다.
 
 ```java
-public class Main{
-    public static void main(string[] args){
-        Parent parent = new Child();
-        Child ch = (Child) parent; // 강제 타입 변환
-        ch.b();
-    }
-}
+throw 예외객체
+ex) throw new Exception("예외 발생!")
 ```
-
 <br>
-<hr/>
-
-<h2>Instanceof 란?</h2>
-* 참조변수가 참조하고 있는 인스턴스의 실제 타입을 알아보기 위해 Instanceof 연산자를 사용한다.
-* 주로 조건문에 사용되며, Instanceof의 왼쪽에는 참조변수를, 오른쪽에는 타입(클래스 명)이 피연산자로 위치한다.
-* 연산의 결과로는 boolean 값인 true와 False 둘 중 하나를 반환한다.
-* Instanceof를 이용한 연산결과로 true를 얻었다는 것은, 참조변수가 검사한 타입으로 형변환이 가능하다는 것을 뜻한다.
-* null인 참조변수에 대해 Instanceof 연산을 수행하면 False를 결과로 얻는다.
+예외를 발생시키는 키워드는 throw이고, 이때 main은 그 예외를 처리하기 위해 try, catch 블록을 아래처럼 사용하면 된다.
 
 ```java
-public class Main{
-    public static void main(String[] args){
-        Parent pa1 = new Child();
-        Parent pa2 = new Parent();
-        Casting casting = new Casting();
-
-        casting.castingObject(pa1);
-        casting.castingObject(pa2);
-    }
-}
-
-public class Casting{
-    void castingObject(Parent parent){
-        if(parent instanceof Child){
-            Child ch = (Child) parent;
-            System.out.println("Casting success, 부모 타입의 자식 객체");
-        }
-        else{
-            System.out.println("Casting fail, 부모 타입의 부모 객체");
-        }
-    }
+try {
+	divide(a,b);
+}catch(ArithmeticException e) {
+	e.getMessage();
+	e.printStackTrace();
 }
 ```
-
-위 코드의 결과로는 <br>
-Casting success, 부모 타입의 자식 객체 <br>
-Casting fail, 부모 타입의 부모 객체 <br>
-가 나오게 된다.
-
-__참조변수 instanceof 객체타입__ 의 연산 결과는 상술한대로 true 또는 False로 반환된다. casting을 시도할때는 경우를 구분하지 않으면 ClassCastException 예외가 발생하니 유념하자.
-
 <br>
+만약 throws 키워드로 처리되어야 할 예외가 여러 개가 존재한다면, 쉼표러 끊어서 예외를 넘길 수도 있다. 그 결과는 아래와 같다.
 
-[다형성 출처][다형성]<br>
-[자동 타입 변환과 강제 타입 변환 출처][설명]<br>
-[Instanceof 출처][설명2]<br>
+```java
+java.lang.ArithmeticException: 0으로 나눌 수는 없다니까?
+	at aa.Main.divide(Main.java:8)
+	at aa.Main.main(Main.java:17)
+```
 
-[다형성]: https://steady-coding.tistory.com/446
-[설명]: https://lordofkangs.tistory.com/20
-[설명2]: https://arabiannight.tistory.com/313
+
+[Interface 출처][설명]<br>
+[Exception 출처][설명2]<br>
+
+[설명]: https://limkydev.tistory.com/197
+[설명2]: https://reakwon.tistory.com/155
