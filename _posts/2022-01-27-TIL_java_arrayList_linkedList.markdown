@@ -61,6 +61,7 @@ public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
         }
     }
 }
+```
 ArrayList는 위와 같이 3개의 생성자가 존재한다.
 * 아무 것도 매개변수로 받지 않는 생성자
 * 초기 용량을 매개변수로 받는 생성자
@@ -70,6 +71,7 @@ ArrayList는 위와 같이 3개의 생성자가 존재한다.
 
 ```java
 List<Integer> list = new ArrayList<>();
+
 ```
 보통 ArrayList의 객체를 만들 때 위와 같이 만들게 된다. 위와 같이 만들면, 아래와 같은 매개변수가 존재하지 않는 생성자가 만들어진다.
 
@@ -78,6 +80,7 @@ private static final int DEFAULT_CAPACITY = 10;
 public ArrayList(){
     this.elementData = DEFAULTCAPACITY_EMPTY_ELEMENTDATA;
 }
+
 ```
 위의 생성자를 이용하여 ArrayList를 만들게 되면 DEFAULT_CAPACITY = 10으로 정의되어 있다. 한마디로 배열의 크기가 10으로 지정된 것과 같다고 생각하면 된다.<br>
 만약, 10보다 더 많은 원소를 넣으면 어떻게 될까?<br>
@@ -91,6 +94,7 @@ public class ArrayList<E>{
         return true;
     }
 }
+
 ```
 ArrayList 안에는 배열에 값을 추가할 수 있는 add() 메서드가 존재한다. ensureCapacityInternal()이 보이는데, 여기서 아마 배열 용량을 늘리는 작업이 일어날 것 같다.
 
@@ -119,6 +123,7 @@ public class ArrayList<E>{
         elementData = Arrays.copyOf(elementData, newCapacity);
     }
 }
+
 ```
 ArrayList 내부의 메서드인데 코드는 위와 같이 되어있다. 복잡해 보이지만, 중요한 부분은 grow() 메서드 내부에서 Arrays.copyOf(elementData, newCapacity);를 통해서 더 큰 배열에다 기존 배열의 원소들을 복사한다는 점이다. Array.copyOf() 내부 코드를 보면 알 수 있지만, 실제 A 배열을 B 배열로 옮기는 과정은 원소의 수가 얼마 안되면 괜찮겠지만 많다면 상당히 많은 시간이 소요되고 효율적이지 못하다.
 
@@ -234,6 +239,7 @@ public class ArrayListLinkedListTest {
         return end - start;
     }
 }
+
 ```
 <br>
 
