@@ -231,18 +231,83 @@ public class Main {
 </p><br>
 즉, 클래스에서 지정한 제네릭유형과 별도로 메서드에서 독립적으로 제네릭 유형을 선언하여 쓸 수 있다. 그럼 위와같은 방식은 왜 필요한가? 바로 '정적 메서드로 선언할 때 필요' 하기 때문이다.<br>
 생각해보자. 앞서 제네릭은 유형을 외부에서 지정해준다고 했다. 즉, 해당 클래스 객체가 인스턴스화 했을 때 지정이 된다는 뜻이다.<br>
-그러나 static은 무엇인가? 정적이라는 뜻이다. static 변수, static 함수 등 static이 붙은 것들은 기본적으로 프로그램 실행시에 이미 메모리에 올라가있다.
+그러나 static은 무엇인가? 정적이라는 뜻이다. static 변수, static 함수 등 static이 붙은 것들은 기본적으로 프로그램 실행시에 이미 메모리에 올라가있다.<br><br>
+이 말인즉슨, 객체 생성을 통해 접근할 필요 없이 이미 메모리에 올라가 있기 떄문에 클래스 이름을 통해 바로 사용할 수 있다는 것이다.<br>
+근데 거꾸로 생각해보면 static 메서드는 객체가 생성되기 전에 이미 메모리에 올라가있는데 타입을 어디서 얻어오는가?
 
+```java
+class ClassName<E>{
+	// 클래스와 같은 E 타입이더라도 static method는 객체가 생성되기 이전 시점에 메모리에 먼저 올라가기 때문에 E유형을 클래스로부터 얻어올 방법이 없다.
+	static E genericMethod(E o){ // error
+		return o;
+	}
+}
 
+class Main{
+	public static void main(String[] args){
+		// ClassName객체가 생성되기 전에 접근할 수 있으나 유형을 지정할 방법이 없어 에러
+		ClassName.genericMethod(3);
+	}
+}
+```
+위 내용을 보면 이해가 갈 것이다. 그렇기 때문에 __제네릭이 사용되는 메서드를 정적 메서드로 두고 싶은 경우 제네릭 클래스와 별도로 독립적인 제네릭이 사용되어야 한다__ 는 것이다.
 
+```java
+class ClassName<E> {
+	private E element;
 
+	void set(E element){
+		this.element = element;
+	}
 
+	E get() {
+		return element;
+	}
 
+	// 아래 메서드의 E 타입은 제네릭 클래스의 E 타입과 다른 독립적인 타입이다.
+	static <E> E genericMethod1(E o){ // 제네릭 메서드
+		return o;
+	}
 
+	static <T> T genericMethod2(T o) { // 제네릭 메서드
+		return o;
+	}
+}
 
-
-
-
+public class Main{
+	public static void main(String[] args){
+		ClassName<String> a = new ClassName<String>();
+		ClassName<Integer> b = new ClassName<Integer>();
+ 
+		a.set("10");
+		b.set(10);
+ 
+		System.out.println("a data : " + a.get());
+		// 반환된 변수의 타입 출력
+		System.out.println("a E Type : " + a.get().getClass().getName());
+ 
+		System.out.println();
+		System.out.println("b data : " + b.get());
+		// 반환된 변수의 타입 출력
+		System.out.println("b E Type : " + b.get().getClass().getName());
+		System.out.println();
+ 
+		// 제네릭 메소드1 Integer
+		System.out.println("<E> returnType : " + ClassName.genericMethod1(3).getClass().getName());
+ 
+		// 제네릭 메소드1 String
+		System.out.println("<E> returnType : " + ClassName.genericMethod1("ABCD").getClass().getName());
+ 
+		// 제네릭 메소드2 ClassName a
+		System.out.println("<T> returnType : " + ClassName.genericMethod1(a).getClass().getName());
+ 
+		// 제네릭 메소드2 Double
+		System.out.println("<T> returnType : " + ClassName.genericMethod1(3.0).getClass().getName());
+	}
+}
+```
+보다시피 제네릭 메서드는 제네릭 클래스 타입과 별도로 지정된다는 것을 볼 수 있다. <> 괄호 안에 타입을 파라미터로 보내 제네릭 타입을 지정해주는 것. 이것이 제네릭 프로그래밍이다.<br>
+그럼 특정 범위만 허용하고 나머지 타입은 제한할 수는 없는건가? 라는 의문이 들기 마련이다. 이 의문은 내일 포스팅할 예정이다.
 
 
 [설명 출처][설명]<br>
