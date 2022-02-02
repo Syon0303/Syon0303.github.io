@@ -8,7 +8,7 @@ categories: java
 
 
 <br>
-<h4>제한된 Generic과 와일드카드</h4>
+<h2>제한된 Generic과 와일드카드</h2>
 어제 포스팅에선 가장 일반적인 예시를 보여주었다. 타입을 T라고 하고 외부 클래스에서 Integer를 파라미터로 보내면 T는 Integer가 되고, String을 보내면 T는 String이 된다. 만약 Student라는 클래스를 만들었을 때 T 파라미터를 Student로 보내면 T는 Student가 된다. 즉, 제네릭은 참조 타입 모두 될 수 있다.<br><br>
 근데 만약 특정 범위 내로 좁혀서 젷나하고 싶다면 어떻게 해야할까?<br><br>
 이때 필요한 것이 바로 extends와 super, 그리고 물음표다. 물음표는 와일드카드라고해서 쉽게 말해 '알 수 없는 타입'이라는 의미이다.<br>
@@ -22,9 +22,9 @@ categories: java
 <? super ?> // T와 T의 부모 타입만 가능
 <?> // 모든 타입 가능. <? extends Object>랑 같은 의미이다.
 ```
-보통 이해하기 쉽게 다음과 같이 부른다.<br>
+<br><br>보통 이해하기 쉽게 다음과 같이 부른다.<br>
 __extends T : 상한 경계__ <br>
-__? super T : 하한 경계__ <br><br>
+__? super T : 하한 경계__ <br>
 __<?> 와일드 카드__ <br><br>
 
 
@@ -43,10 +43,10 @@ __<?> 와일드 카드__ <br><br>
 <p align="center">
     <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbpS4Bp%2FbtqLcTploFp%2FcTEkLdHVPZW5lnKOvtbS91%2Fimg.png" width="50%" height="50%" title="제네릭"/>
 </p><br>
-다음과 같이 서로 다른 클래스들이 상속관계를 갖고 있다고 가정해보자.<br>
+다음과 같이 서로 다른 클래스들이 상속관계를 갖고 있다고 가정해보자.<br><br>
 
 
-<h4>< K extendsT >, < ? extends T ></h4>
+<h2>< K extendsT >, < ? extends T ></h2>
 이 것은 T 타입을 포함한 자식 타입만 가능하다는 의미이다. 즉, 다음과 같은 경우들이 있다.
 
 ```java
@@ -57,15 +57,17 @@ __<?> 와일드 카드__ <br><br>
 <? extends B> // B와 C타입만 올 수 있음.
 <? extends E> // E타입만 올 수 있음.
 <? extends A> //A, B, C, D, E 타입 모두 올 수 있음.
+
 ```
-보다시피, 상한 한계. 즉, extends 뒤에 오는 타입이 최상위 타입으로 한계가 정해지는 것이다.<br>
+<br>보다시피, 상한 한계. 즉, extends 뒤에 오는 타입이 최상위 타입으로 한계가 정해지는 것이다.<br>
 대표적인 예로는 제네릭 클래스에서 수를 표현하는 클래스만 받고 싶은 경우가 있다. 대표적인 Integer, Long, Byte, Double, Float, Short같은 Wrapper 클래스들은 Number클래스를 상속받는다.<br>
 즉, Integer, Long, Byte, Double, Float, Short 같은 수를 표현하는 Wrapper 클래스만으로 제한하고 싶은 경우 다음과 같이 쓸 수 있다.
 
 ```java
 public class ClassName<K extends Number>{ ... }
+
 ```
-이렇게 특정 타입 및 그 하위 타입만 제한하고 싶은 경우 사용하면 된다. 좀 더 구체적으로 예로 들자면, 다음과 같다. Integer는 Number 클래스를 상속받는 클래스라 가능하겠지만, String은 Number 클래스와는 완전 별개의 클래스이기 때문에 에러를 띄운다.
+<br>이렇게 특정 타입 및 그 하위 타입만 제한하고 싶은 경우 사용하면 된다. 좀 더 구체적으로 예로 들자면, 다음과 같다. Integer는 Number 클래스를 상속받는 클래스라 가능하겠지만, String은 Number 클래스와는 완전 별개의 클래스이기 때문에 에러를 띄운다.
 
 ```java
 public class ClassName<K extends Number>{ ... }
@@ -76,10 +78,12 @@ public class Main{
 		ClassName<String> a2 = new ClassName<String>(); // error
 	}
 }
+
 ```
+<br><br>
 
 
-<h4><K super T>, <? super T></h4>
+<h2>< K super T >, < ? super T ></h2>
 이 것은 T 타입의 부모 타입만 가능하다는 의미이다. 즉, 다음과 같은 경우들이 있다.
 
 ```java
@@ -103,7 +107,7 @@ public class ClassName <E extends Comarable<? super E>> { ... }
 한 번쯤 봤을만한 코드이다. 특히 PriorityQueue(우선순위 큐), TreeSet, TreeMap 같이 값을 정렬하는 클래스에서 봤을것이다. 만약 특정 제네릭에 대한 자기 참조 비교를 하고싶은 경우 대부분 공통적으로 위와 같은 형식을 취한다.<br>
 
 
-E extends Comarable부터 한번 보자.<br>
+<br><br>E extends Comarable부터 한번 보자.<br><br>
 extends는 앞서 말했듯 extends 뒤에 오는 타입이 최상위 타입이 되고, 해당 타입과 그에 대한 하위 타입이라고 했다. 그럼 역으로 생각해보면, __E 객체는 반드시 Comparable을 구현해야 한다는 의미__ 아니겠는가?
 
 ```java
@@ -120,7 +124,7 @@ public class Main{
 	}
 }
 ```
-이렇게만 쓴다면 E extends Comparable < E > 까지만 써도 무방하다. 즉, SoltClass의 E는 Student가 되어야 하는데, Comparable < Person >의 하위 타입이어야 하므로 거꾸로 말해서 Comparable을 구현해야 한다는 의미인 것이다.<br><br>
+<br>이렇게만 쓴다면 E extends Comparable < E > 까지만 써도 무방하다. 즉, SoltClass의 E는 Student가 되어야 하는데, Comparable < Person >의 하위 타입이어야 하므로 거꾸로 말해서 Comparable을 구현해야 한다는 의미인 것이다.<br><br>
 그러면 왜 Comparable<E> 가 아닌 <? super E> 일까?<br>
 잠깐 설명했지만, super E는 E를 포함한 상위 타입 객체들이 올 수 있다고 했다. 만약 위의 예제에서 학생보다 더 큰 범주의 클래스인 Person 클래스를 둔다면 어떻게 될까? 한마디로 아래와 같다면?
 
@@ -141,15 +145,17 @@ public class Main{
 	}
 }
 ```
-쉽게 말하면 Person을 상속받고 Comparable 구현부인 compareTo에서 Person 타입으로 업캐스팅(Up-Casting) 한다면 어떻게 될까? <br>
+<br>쉽게 말하면 Person을 상속받고 Comparable 구현부인 compareTo에서 Person 타입으로 업캐스팅(Up-Casting) 한다면 어떻게 될까? <br>
 만약 < E extends Comparable < E >> 라면 SoltClass < Student > a 객체가 타입 파라미터로 Student를 주지만, Complarable에서는 그보다 상위 타입인 Person으로 비교하기 때문에 Comparable < E > 의 E인 Student보다 상위 타입 객체이기 때문에 제대로 정렬이 안되거나 에러가 날 수 있다.<br>
 그렇기 때문에 E 객체의 상위 타입, 즉 <? super E>을 해줌으로서 위와 같은 불상사를 방지할 수가 있는 것이다.<br><br>
-< E extends Comparable < ? super E >>에 대한 설명이 좀 길었는데, 이 긴 내용은 한마디로 이것이다. __"E자기 자신 및 조상 타입과 비교할 수 있는 E"__
+< E extends Comparable < ? super E >>에 대한 설명이 좀 길었는데, 이 긴 내용은 한마디로 이것이다.<br> __"E자기 자신 및 조상 타입과 비교할 수 있는 E"__
 
 
-<h4>< ? > (와일드 카드, Wild Card)</h4>
+<br><br>
+<h2>< ? > (와일드 카드, Wild Card)</h2>
 이 와일드 카드 < ? > 는 < ? extends Object >와 마찬가지라고 했다. Object는 자바에서의 모든 API 및 사용자 클래스의 최상위 타입이다. 한마디로, < ? > 는 무엇이냐. 어떤 타입이든 상관 없다는 의미이다. 당신이 String을 받던 어떤 타입을 리턴 받던 알바 아니라는 이야기이다. 이는 보통 데이터가 아닌 '기능'의 사용에만 관심이 있는 경우에 < ? > 로 사용할 수 있다.
 
+<br><br><br>
 
 [설명 출처][설명]<br>
 
